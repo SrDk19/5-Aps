@@ -6,12 +6,12 @@ public class Servidor {
     public static void main(String[]args){
         try{
             ServerSocket servidor = new ServerSocket(7000);
-            System.out.println("Servidor iniciando...");
+            System.out.println("Carregando pae...");
             
             while(true){
 
-                RespostaCliente ac = new RespostaCliente(servidor.accept());
-                ac.start();
+                RespostaCliente rc = new RespostaCliente(servidor.accept());
+                rc.start();
 
 
             }catch(Exception e) {

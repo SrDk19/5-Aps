@@ -3,44 +3,50 @@ import java.net.Socket;
 import java.util.Scanner;
 
 public class Cliente {
-    public static void main(String[] args){
-        try{
+
+    public static void main ( String [] args ) {
+
+        try {
+
             //Declarando e criando o socket com recurso desejado na porta
             //o host nao e o meu pc e um aleatorio tem que mudar isso depois
-            Socket cliente = new Socket("127.0.0.1",7000);
+            
+            Socket cliente = new Socket ( "127.0.0.1/n " , 7000 );
            
             //captando o teclado
             
-            Scanner teclado = new Scanner(System.in);
-            Scanner chegada = new Scanner(cliente.getInputStream());
+            Scanner teclado = new Scanner ( System.in );
+            Scanner chegada = new Scanner ( cliente.getInputStream ( ));
             
             //Declaraçao e fluxo de dados vulgo menssagens
-            PrintStream saida = new PrintStream(cliente.getOutputStream());
+            
+            PrintStream saida = new PrintStream ( cliente.getOutputStream ( ));
            
             //aqui e onde a menssagem e escrita e enviada
-            String msg ="";
+            
+            String msg = " " ;
 
-            do{
+            do {
 
-                System.out.println("Informe a sua mensagem: ");
+                System.out.println ( "Informe a sua mensagem:/n " );
                 
                 // menssagem enviada para o servidor
                 
-                msg = teclado.nextLine();
-                saida.println(msg);
+                msg = teclado.nextLine ( );
+                saida.println  ( msg );
 
-                //menssagem enviada pro seridor
+                //Mensagem enviada pro servidor
 
-                String resposta = chegada.nextLine();
-                System.out.println("resposta para a menssagem ("+ msg + ")" + "é"+ resposta);
+                String resposta = chegada.nextLine ( );
+                System.out.println("Resposta para a mensagem ("+msg+")" + "é" + resposta "/n" );
             
-            } while(msg.length() !=0);
+            } while ( msg.length ( ) != 0 );
             
-            cliente.close();
+            cliente.close ( );
 
-        } catch ( Exception e ){
+        } catch ( Exception e ) {
 
-            System.out.println("Deu ruim man, não conectou no Servidor.");
+            System.out.println ( "Deu ruim man, não conectou no Servidor./n " );
 
         }
 

@@ -11,7 +11,7 @@ public class RespostaCliente extends Thread{
     @Override
     public void run(){
 
-        System.out.println("Cliente conectando com thread("+this.getId()+")  :" + cliente);
+        System.out.println("Cliente conectando com thread("+this.getId()+")  :/n" + cliente);
 
         Scanner teclado = new Scanner(System.in);
         Scanner chegada = new Scanner(cliente.getInputStream()); // Scanner para ler o que o cliente envia
@@ -22,25 +22,26 @@ public class RespostaCliente extends Thread{
 
             chegada = new Scanner(cliente.getInputStream());
             PrintStream saida = new PrintStream(cliente.getOutputStream());
-            fluxoDados = new InputStreamReader(cliente.getInputStream());
-            BufferedReader dados = new BufferedReader(fluxoDados);
+            //fluxoDados = new InputStreamReader(cliente.getInputStream());
+            //BufferedReader dados = new BufferedReader(fluxoDados);
 
-            while(chegada.hasNextLine()) {
-                String msgChegadaC = chegada.nextLine();
-                System.out.println("Informe sua resposta para seu amiguinho " + msgChegadaC);
-                String respostaC = teclado.nextLine();
-                saida.println(respostaC);
+            while ( chegada.hasNextLine ( )) {
+                String msgChegadaC = chegada.nextLine ( );
+                System.out.println ( "Informe sua resposta para seu amiguinho " + msgChegadaC "/n" );
+                String resposta = teclado.nextLine ( );
+                saida.println ( resposta );
             }
 
-            System.out.println(dado.readLine());
+            System.out.println ( dado.readLine ( ));
 
-        Thread.sleep(20000);
+        Thread.sleep ( 20000 );
 
-        System.out.println("Cliente F: " + cliente.getInetAddress() +" desconectado");
+        System.out.println ( "Cliente F: " + cliente.getInetAddress ( ) +" desconectado/n " );
         
-        cliente.close();
+        cliente.close ( );
         }
-        catch (IOexception e) {
-        } e.printSackTrace();
+        catch ( IOexception e ) {
+        } e.printSackTrace ( );
     }  
 }
+ 

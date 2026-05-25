@@ -17,7 +17,7 @@ public class Servidor {
             System.out.println( "Conectando com os amiguinhos...\n");
 
             while ( true ) {
-                Socket socket = servidor.accept( );
+                Socket socket = servidor.accept ( );
                 ClienteHandler handler = new ClienteHandler ( socket );
                 clientes.add ( handler );
                 new Thread ( handler ).start( );

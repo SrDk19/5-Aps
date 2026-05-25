@@ -1,0 +1,15 @@
+Você tem que ir na pasta no terminal, depois que estiver na pasta dos arquivos, crie a linha do servi em ORDEM:
+
+javac RespostaCliente.java ( 1° a ser feito )
+javac Servidor.java ( 2° )
+javac Cliente.java ( 3° )
+
+Depois que compilou, basta rodar o server.
+
+java server
+
+Depois que ele imprimir a mensagem, abra outro cmd
+
+Cmd 2:
+
+Abra o Cliente e dale

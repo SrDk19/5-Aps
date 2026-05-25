@@ -26,7 +26,7 @@ public class Cliente {
                 msg = teclado.nextLine ( ) ;
                 saida.println ( msg ) ;
 
-                if ( msg.equalsIgnoreCase ( "\nsair\n" ) ) {
+                if ( msg.equalsIgnoreCase ( "sair" ) ) {
                     break;
                 }
             }

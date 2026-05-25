@@ -1,4 +1,4 @@
-import java.io.BufferedReader;
+import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -6,19 +6,22 @@ public class Servidor {
     public static void main ( String [ ] args ) {
         try {
 
-            ServerSocket servidor = new ServerSocket ( 7000 );
-            System.out.println ( "Carregando pae... /n" );
+            ServerSocket servidor = new ServerSocket ( 20000 );
+            System.out.println ( "Carregando pae... \n" );
             
             while ( true ) {
 
-                RespostaCliente rc = new RespostaCliente ( servidor.accept ( ));
-                rc.start ( );
-
+                Socket cliente = servidor.accept( );
+                System.out.println ( "Conexão feita: " + cliente.getInetAddress ( ));
+                
+                // Inicia uma thread para cada cliente
+                
+                new RespostaCliente(cliente).start();
 
             }
-        catch ( Exception e ) {
-        System.out.println ( "Ocorreu um erro!/n " );
-            }
+        } catch (IOException e) {
+            System.out.println ( "\nFunfou n man, se liga no que deu : " + e.getMessage( ) + "\n " );
+            e.printStackTrace( );
         }
     }
 }

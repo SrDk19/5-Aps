@@ -1,47 +1,39 @@
+import java.io.*;
 import java.net.Socket;
+import java.util.Scanner;
 
-public class RespostaCliente extends Thread{
+public class RespostaCliente extends Thread {
 
-    Socket cliente;
+    private final Socket cliente;
 
-    RespostaCliente(Socket cli){
-
+    public RespostaCliente( Socket cli ) {
         this.cliente = cli;
     }
+
     @Override
-    public void run(){
-
-        System.out.println("Cliente conectando com thread("+this.getId()+")  :/n" + cliente);
-
-        Scanner teclado = new Scanner(System.in);
-        Scanner chegada = new Scanner(cliente.getInputStream()); // Scanner para ler o que o cliente envia
-        
-        inputStreamReader fluxoDados;
-
+    public void run( ) {
         try {
+            Scanner entrada = new Scanner(cliente.getInputStream( ));
+            PrintStream saida = new PrintStream(cliente.getOutputStream( ));
 
-            chegada = new Scanner(cliente.getInputStream());
-            PrintStream saida = new PrintStream(cliente.getOutputStream());
-            //fluxoDados = new InputStreamReader(cliente.getInputStream());
-            //BufferedReader dados = new BufferedReader(fluxoDados);
+            System.out.println ( "Conexão com o pc: " + cliente.getInetAddress( ) + " = conectado.\n");
 
-            while ( chegada.hasNextLine ( )) {
-                String msgChegadaC = chegada.nextLine ( );
-                System.out.println ( "Informe sua resposta para seu amiguinho " + msgChegadaC "/n" );
-                String resposta = teclado.nextLine ( );
-                saida.println ( resposta );
+            while (entrada.hasNextLine( )) {
+                String mensagem = entrada.nextLine( );
+                System.out.println ( "[" + cliente.getInetAddress( ) + "] disse: " + mensagem + "\n " );
+
+                // Responde para o cliente/amiguinho
+                saida.println ( "Servidor responde: " + mensagem + "\n " );
             }
 
-            System.out.println ( dado.readLine ( ));
-
-        Thread.sleep ( 20000 );
-
-        System.out.println ( "Cliente F: " + cliente.getInetAddress ( ) +" desconectado/n " );
-        
-        cliente.close ( );
+        } catch ( Exception e ) {
+            System.out.println ( "\nAmigo " + cliente.getInetAddress( ) + " desconectou. \n" );
+        } finally {
+            try {
+                cliente.close( );
+            } catch ( IOException e ) {
+                e.printStackTrace( );
+            }
         }
-        catch ( IOexception e ) {
-        } e.printSackTrace ( );
-    }  
+    }
 }
- 

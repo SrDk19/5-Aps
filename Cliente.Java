@@ -1,55 +1,41 @@
-import java.io.PrintStream;
+import java.io.*;
 import java.net.Socket;
 import java.util.Scanner;
 
 public class Cliente {
 
-    public static void main ( String [] args ) {
-
+    public static void main ( String [ ] args ) {
         try {
+            Socket cliente = new Socket ( "127.0.0.1" , 7000 );
+            System.out.println ( "\nPode conversar chefe, lembre que " + "/sair" + " fecha a convera.\n" );
 
-            //Declarando e criando o socket com recurso desejado na porta
-            //o host nao e o meu pc e um aleatorio tem que mudar isso depois
-            
-            Socket cliente = new Socket ( "127.0.0.1/n " , 7000 );
-           
-            //captando o teclado
-            
             Scanner teclado = new Scanner ( System.in );
-            Scanner chegada = new Scanner ( cliente.getInputStream ( ));
+            Scanner entrada = new Scanner ( cliente.getInputStream ( ) );
+            PrintStream saida = new PrintStream ( cliente.getOutputStream ( ) );
+
+            // Thread para receber mensagens do servidor
             
-            //Declaraçao e fluxo de dados vulgo menssagens
-            
-            PrintStream saida = new PrintStream ( cliente.getOutputStream ( ));
-           
-            //aqui e onde a menssagem e escrita e enviada
-            
-            String msg = " " ;
+            new Thread ( ( ) -> {
+                while ( entrada.hasNextLine ( ) ) {
+                    System.out.println ( entrada.nextLine ( ) );
+                }
+            }).start ( );
 
-            do {
+            String msg;
+            while ( true ) {
+                msg = teclado.nextLine ( ) ;
+                saida.println ( msg ) ;
 
-                System.out.println ( "Informe a sua mensagem:/n " );
-                
-                // menssagem enviada para o servidor
-                
-                msg = teclado.nextLine ( );
-                saida.println  ( msg );
+                if ( msg.equalsIgnoreCase ( "sair" ) ) {
+                    break;
+                }
+            }
 
-                //Mensagem enviada pro servidor
+            cliente.close ( ) ;
+            System.out.println ( "Desconectado do servidor.\n" ) ;
 
-                String resposta = chegada.nextLine ( );
-                System.out.println("Resposta para a mensagem ("+msg+")" + "é" + resposta "/n" );
-            
-            } while ( msg.length ( ) != 0 );
-            
-            cliente.close ( );
-
-        } catch ( Exception e ) {
-
-            System.out.println ( "Deu ruim man, não conectou no Servidor./n " );
-
+        } catch ( IOException e ) {
+            System.out.println("Deu ruim man, ó o erro aí: " + e.getMessage ( ) + "\n " );
         }
-
     }
-    
 }

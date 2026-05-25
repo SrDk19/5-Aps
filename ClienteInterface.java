@@ -1,7 +1,18 @@
-import java.awt.*;
-import java.io.*;
-import java.net.*;
-import javax.swing.*;
+import java.awt.BorderLayout;
+import java.awt.Font;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.Socket;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 
 public class ClienteInterface extends JFrame {
     private Socket socket;
@@ -48,7 +59,7 @@ public class ClienteInterface extends JFrame {
             nomeUsuario = JOptionPane.showInputDialog ( this, "Digite seu nome de usuário: ", "Bem-vindo ao Chat ", JOptionPane.PLAIN_MESSAGE );
             if ( nomeUsuario == null || nomeUsuario.trim( ).isEmpty( )) nomeUsuario = "Usuário" + ( int )( Math.random ( ) * 999);
 
-            String ip = JOptionPane.showInputDialog ( this, "\nDigite o IP do Servidor:\n", "127.0.0.1" );
+            String ip = JOptionPane.showInputDialog ( this, "Digite o IP do Servidor:", "127.0.0.1" );
             if ( ip == null ) ip = "127.0.0.1";
 
             socket = new Socket ( ip, 20000 );

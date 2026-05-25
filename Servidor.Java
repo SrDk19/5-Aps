@@ -7,7 +7,7 @@ public class Servidor {
         try {
 
             ServerSocket servidor = new ServerSocket ( 20000 );
-            System.out.println ( "Carregando pae... \n" );
+            System.out.println ( "\nServidor rodando chefe \n" );
             
             while ( true ) {
 

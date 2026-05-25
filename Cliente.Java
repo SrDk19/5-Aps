@@ -6,7 +6,7 @@ public class Cliente {
 
     public static void main ( String [ ] args ) {
         try {
-            Socket cliente = new Socket ( "127.0.0.1" , 20000 );
+            Socket cliente = new Socket ( "127.0.0.1" , 20000 ); //Lmebrando que aqui você vai usar o IP do servidor.
             System.out.println ( "\nPode conversar chefe, lembre que " + "/sair" + " fecha a convera.\n" );
 
             Scanner teclado = new Scanner ( System.in );
@@ -26,16 +26,16 @@ public class Cliente {
                 msg = teclado.nextLine ( ) ;
                 saida.println ( msg ) ;
 
-                if ( msg.equalsIgnoreCase ( "sair" ) ) {
+                if ( msg.equalsIgnoreCase ( "\nsair\n" ) ) {
                     break;
                 }
             }
 
             cliente.close ( ) ;
-            System.out.println ( "Desconectado do servidor.\n" ) ;
+            System.out.println ( "\nDesconectado do servidor.\n" ) ;
 
         } catch ( IOException e ) {
-            System.out.println("Deu ruim man, ó o erro aí: " + e.getMessage ( ) + "\n " );
+            System.out.println ( "\nDeu ruim man, ó o erro aí: " + e.getMessage( ) + "\n " );
         }
     }
 }

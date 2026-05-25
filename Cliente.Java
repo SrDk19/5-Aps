@@ -6,7 +6,7 @@ public class Cliente {
 
     public static void main ( String [ ] args ) {
         try {
-            Socket cliente = new Socket ( "127.0.0.1" , 7000 );
+            Socket cliente = new Socket ( "127.0.0.1" , 20000 );
             System.out.println ( "\nPode conversar chefe, lembre que " + "/sair" + " fecha a convera.\n" );
 
             Scanner teclado = new Scanner ( System.in );

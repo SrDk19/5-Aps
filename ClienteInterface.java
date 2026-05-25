@@ -12,18 +12,20 @@ public class ClienteInterface extends JFrame {
     private String nomeUsuario;
 
     public ClienteInterface ( ) {
-        setTitle( "\nAPS 5° Semestre\n" );
+        setTitle( "APS 5° Semestre" );
         setSize( 700, 500 );
         setDefaultCloseOperation ( JFrame.EXIT_ON_CLOSE );
         setLocationRelativeTo ( null );
 
         // Área de chat
+
         areaChat = new JTextArea ( );
         areaChat.setEditable( false );
         areaChat.setFont ( new Font( "Arial", Font.PLAIN, 14 ));
         JScrollPane scroll = new JScrollPane ( areaChat );
 
         // Campo de mensagem
+
         campoMensagem = new JTextField ( );
         JButton btnEnviar = new JButton ( "Enviar" );
         JPanel painelInferior = new JPanel ( new BorderLayout( ));
@@ -34,6 +36,7 @@ public class ClienteInterface extends JFrame {
         add ( painelInferior, BorderLayout.SOUTH );
 
         // Ações
+
         btnEnviar.addActionListener ( e -> enviarMensagem ( ));
         campoMensagem.addActionListener ( e -> enviarMensagem ( ));
 
@@ -42,7 +45,7 @@ public class ClienteInterface extends JFrame {
 
     private void conectar( ) {
         try {
-            nomeUsuario = JOptionPane.showInputDialog ( this, "\nDigite seu nome de usuário:\n", "Bem-vindo ao Chat ", JOptionPane.PLAIN_MESSAGE );
+            nomeUsuario = JOptionPane.showInputDialog ( this, "Digite seu nome de usuário: ", "Bem-vindo ao Chat ", JOptionPane.PLAIN_MESSAGE );
             if ( nomeUsuario == null || nomeUsuario.trim( ).isEmpty( )) nomeUsuario = "Usuário" + ( int )( Math.random ( ) * 999);
 
             String ip = JOptionPane.showInputDialog ( this, "\nDigite o IP do Servidor:\n", "127.0.0.1" );
@@ -55,6 +58,7 @@ public class ClienteInterface extends JFrame {
             out.println ( nomeUsuario );  // Envia o nome
 
             // Thread para receber mensagens
+
             new Thread ( this::receberMensagens ).start( );
 
         } catch ( IOException e ) {
@@ -86,7 +90,7 @@ public class ClienteInterface extends JFrame {
         }
     }
 
-    public static void main( String [ ] args ) {
+    public static void main ( String [ ] args ) {
         SwingUtilities.invokeLater(( ) -> new ClienteInterface( ).setVisible( true ));
     }
 }

@@ -1,27 +1,82 @@
-import java.io.IOException;
+import java.util.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.List;
+import java.util.ArrayList;
 
 public class Servidor {
+    private static final int PORTA = 20000;
+    private static final List < ClienteHandler > clientes = new ArrayList < > ( );
+
     public static void main ( String [ ] args ) {
-        try {
+        try ( ServerSocket servidor = new ServerSocket ( PORTA )) {
+            System.out.println( "Servidor iniciado  irmão.\nPorta: " + PORTA );
+            System.out.println( "\nAguardando conexões...\n");
 
-            ServerSocket servidor = new ServerSocket ( 20000 );
-            System.out.println ( "\nServidor rodando chefe \n" );
-            
             while ( true ) {
-
-                Socket cliente = servidor.accept( );
-                System.out.println ( "Conexão feita: " + cliente.getInetAddress ( ));
-                
-                // Inicia uma thread para cada cliente
-                
-                new RespostaCliente(cliente).start();
-
+                Socket socket = servidor.accept( );
+                ClienteHandler handler = new ClienteHandler ( socket );
+                clientes.add ( handler );
+                new Thread ( handler ).start( );
             }
-        } catch (IOException e) {
-            System.out.println ( "\nFunfou n man, se liga no que deu : " + e.getMessage( ) + "\n " );
-            e.printStackTrace( );
+        } catch ( IOException e ) {
+            e.printStackTrace ( );
         }
+    }
+
+    public static synchronized void broadcast ( String mensagem, ClienteHandler remetente ) {
+        for ( ClienteHandler cliente : clientes ) {
+            if ( cliente != remetente ) {
+                cliente.enviarMensagem ( mensagem );
+            }
+        }
+    }
+
+    public static synchronized void removerCliente ( ClienteHandler cliente ) {
+        clientes.remove ( cliente );
+    }
+}
+
+class ClienteHandler implements Runnable {
+    private final Socket socket;
+    private PrintWriter out;
+    private String nome = "\nAnônimo\n";
+
+    public ClienteHandler ( Socket socket ) {
+        this.socket = socket;
+    }
+
+    @Override
+    public void run ( ) {
+        try {
+            BufferedReader in = new BufferedReader ( new InputStreamReader ( socket.getInputStream ( )));
+            out = new PrintWriter(socket.getOutputStream ( ), true );
+
+            // Pede nome do usuário
+            out.println ( "\nDigite seu nome: \n" );
+            nome = in.readLine ( );
+
+            System.out.println ( "\n" + nome + " conectou.\n" );
+            Servidor.broadcast ( "\n" + nome + " entrou na sala.\n", this );
+
+            String mensagem;
+            while ( ( mensagem = in.readLine( ) ) != null ) {
+                if ( mensagem.equalsIgnoreCase ( "sair" )) break;
+                Servidor.broadcast( "[ " + nome + " ] : " + mensagem, this );
+            }
+
+        } catch ( IOException e) {
+
+            // Cliente desconectou
+        
+        } finally {
+            Servidor.broadcast ( nome + " kitou.\n", this );
+            Servidor.removerCliente ( this );
+            try { socket.close ( ); } catch ( IOException ignored ) { }
+        }
+    }
+
+    public void enviarMensagem ( String mensagem ) {
+        if ( out != null ) out.println ( mensagem );
     }
 }

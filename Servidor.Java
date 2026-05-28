@@ -13,8 +13,8 @@ public class Servidor {
 
     public static void main ( String [ ] args ) {
         try ( ServerSocket servidor = new ServerSocket ( PORTA )) {
-        System.out.println( "\nServidor iniciado  irmão.\n\nPorta: " + PORTA + "\n\nIP: 127.0.0.1\n" );
-            System.out.println( "Conectado com os amiguinhos.\n");
+        System.out.println( "\nServidor iniciado, irmão.\n\nPorta: " + PORTA + "\n\nIP: 127.0.0.1\n" );
+            System.out.println( "Conectado com os amiguinhos.\n Fala alguma coisa aí seu cabeça de bagre.\n");
 
             while ( true ) {
                 Socket socket = servidor.accept ( );

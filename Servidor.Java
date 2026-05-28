@@ -13,7 +13,7 @@ public class Servidor {
 
     public static void main ( String [ ] args ) {
         try ( ServerSocket servidor = new ServerSocket ( PORTA )) {
-        System.out.println( "Servidor iniciado  irmão.\nPorta: " + PORTA + "\nIP: 127.0.0.1\n" );
+        System.out.println( "\nServidor iniciado  irmão.\n\nPorta: " + PORTA + "\n\nIP: 127.0.0.1\n" );
             System.out.println( "Conectado com os amiguinhos.\n");
 
             while ( true ) {
